@@ -37,6 +37,18 @@
 </div>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
+window.addEventListener("error", function(event) {
+  const box = document.createElement("div");
+  box.style.cssText = "position:fixed;z-index:99999;top:12px;left:12px;right:12px;padding:16px;background:#401e28;color:#fff;border:2px solid #ff8f9a;border-radius:10px;font:14px/1.5 system-ui;white-space:pre-wrap";
+  box.textContent = "IB Study Hub error: " + (event.message || "Unknown JavaScript error") + (event.filename ? "\nFile: " + event.filename.split("/").pop() : "") + (event.lineno ? "\nLine: " + event.lineno : "");
+  document.body.appendChild(box);
+});
+window.addEventListener("unhandledrejection", function(event) {
+  const box = document.createElement("div");
+  box.style.cssText = "position:fixed;z-index:99999;top:12px;left:12px;right:12px;padding:16px;background:#401e28;color:#fff;border:2px solid #ff8f9a;border-radius:10px;font:14px/1.5 system-ui;white-space:pre-wrap";
+  box.textContent = "IB Study Hub error: " + String(event.reason);
+  document.body.appendChild(box);
+});
 const subjects = {
   ess:{name:"ESS SL",full:"Environmental Systems and Societies",icon:"🌿",color:"#6bd7b2",exam:"P1 · 3 Nov / P2 · 5 Nov",topics:[
     {title:"Systems & models",summary:"A system is a set of interacting components; inputs, outputs, storages and flows describe how matter or energy moves.",notes:"A system has components that interact. An open system exchanges both energy and matter; a closed system exchanges energy but not matter; an isolated system exchanges neither (an ideal model). Inputs enter the system, outputs leave, storages hold matter or energy, and flows transfer it.",key:["Draw a labelled system diagram.","Distinguish matter from energy transfers.","Explain why system boundaries are chosen for a purpose."],cards:[["What is a system?","A set of interacting components forming a whole."],["What is a storage?","A place where matter or energy is held."],["What is an open system?","A system that exchanges both energy and matter with its surroundings."]]},
