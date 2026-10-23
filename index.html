@@ -81,7 +81,7 @@ const subjects = {
   ]}
 };
 const defaultState={version:3,completedTasks:{},scores:[],notes:{},flashKnown:{},quizSeen:{},dailyTarget:4,customTasks:[],customMaterials:[],spanishVocabWords:[]};
-let state=loadState(), page="dashboard", currentSubject="history", currentTopic=0, practiceSubject="ess", questionIndex=0, selectedAnswer=null, answerSubmitted=false, flashIndex=0, flashFlipped=false, flashDeckSubject="ess", currentQuiz=[];
+let state=loadState(), page="dashboard", currentSubject="history", currentTopic=0, practiceSubject="ess", questionIndex=0, selectedAnswer=null, answerSubmitted=false, flashIndex=0, flashFlipped=false, flashDeckSubject="ess", currentQuiz=[];let mockSubject="history",mockPaper="p3",mockDuration=60,mockTitle="",mockActive=false,mockTask="",mockResponse="",mockStartedAt=0,mockEndsAt=0,mockClock=null;
 function loadState(){try{return {...defaultState,...JSON.parse(localStorage.getItem("novMocksState")||"{}")}}catch(e){return {...defaultState}}}
 function save(){localStorage.setItem("novMocksState",JSON.stringify(state));document.getElementById("savedStatus").textContent="Saved just now · this browser";updatePill()}
 function updatePill(){let done=Object.values(state.completedTasks).filter(Boolean).length;document.getElementById("todayPill").textContent=done+" tasks completed"}
