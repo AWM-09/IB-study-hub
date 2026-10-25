@@ -14,6 +14,13 @@ module.exports = async function handler(req, res) {
   }
 
   const body = req.body || {};
+  const expectedAccessCode = process.env.TUTOR_ACCESS_CODE;
+  if (!expectedAccessCode) {
+    return res.status(503).json({ error: "The AI tutor is not configured securely yet. Add TUTOR_ACCESS_CODE to the hosting provider environment variables." });
+  }
+  if (typeof body.accessCode !== "string" || body.accessCode !== expectedAccessCode) {
+    return res.status(401).json({ error: "Enter the correct private AI tutor access code, then save it on this device." });
+  }
   const text = typeof body.text === "string" ? body.text.trim() : "";
   const subject = typeof body.subject === "string" ? body.subject.slice(0, 100) : "IB";
   const fileName = typeof body.fileName === "string" ? body.fileName.slice(0, 180) : "Uploaded revision material";
