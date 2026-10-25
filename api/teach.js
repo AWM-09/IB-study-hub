@@ -106,7 +106,7 @@ module.exports = async function handler(req, res) {
     if (mode === "organize") {
       let parsed;
       try {
-        const cleaned = outputText.replace(/^\\x60\\x60\\x60(?:json)?\\s*/i, "").replace(/\\s*\\x60\\x60\\x60$/, "");
+        const cleaned = outputText.replace(/^\x60\x60\x60(?:json)?\s*/i, "").replace(/\s*\x60\x60\x60$/, "");
         parsed = JSON.parse(cleaned);
       } catch (e) {
         return res.status(502).json({ error: "The AI service returned an unreadable organisation. Please try again." });
