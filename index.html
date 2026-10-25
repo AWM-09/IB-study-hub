@@ -191,8 +191,8 @@ try{
  const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({subject:m.subject||"IB",fileName:m.fileName||m.title||"Revision notes",mode:"organize",text:source.slice(0,85000),accessCode})});
  let data={};try{data=await response.json()}catch(e){}
  if(!response.ok)throw new Error(data.error||("AI tutor returned HTTP "+response.status+". Check that the Vercel backend is deployed and configured."));
- const lessons=(data.groups||[]).map(g=>({title:(g.subject?g.subject+" — ":"")+g.topic+(g.confidence==="medium"?" (check match)":"") ,explanation:(g.items||[]).join("\\n"),subjectId:"",topic:g.topic,count:(g.items||[]).length,confidence:g.confidence}));
- if((data.uncertain||[]).length)lessons.push({title:"Needs checking — AI could not confidently classify",explanation:data.uncertain.join("\\n"),unmatched:true,count:data.uncertain.length});
+ const lessons=(data.groups||[]).map(g=>({title:(g.subject?g.subject+" — ":"")+g.topic+(g.confidence==="medium"?" (check match)":"") ,explanation:(g.items||[]).join("\n"),subjectId:"",topic:g.topic,count:(g.items||[]).length,confidence:g.confidence}));
+ if((data.uncertain||[]).length)lessons.push({title:"Needs checking — AI could not confidently classify",explanation:data.uncertain.join("\n"),unmatched:true,count:data.uncertain.length});
  const unique=[];for(const g of (data.groups||[])){for(const item of (g.items||[])){if(item.length>=30&&!unique.some(x=>x.toLowerCase()===item.toLowerCase()))unique.push(item)}}
  m.studyItems={lessons,summary:(data.summary||[]).slice(0,12),cards:unique.slice(0,24).map((x,i)=>({question:"Explain this point in your own words (card "+(i+1)+").",answer:x})),quiz:unique.slice(0,16).map(x=>({question:"Explain: "+(x.length>130?x.slice(0,127)+"…":x),answer:x})),classification:{groups:lessons.length,matched:unique.length,unmatched:(data.uncertain||[]).length,total:unique.length+(data.uncertain||[]).length},organisedByAI:true};
  m.aiLessonError="Notes organised by AI. Check the topic labels and the ‘Needs checking’ section before revising.";
