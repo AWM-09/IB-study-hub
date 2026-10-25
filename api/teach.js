@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const expectedAccessCode = process.env.TUTOR_ACCESS_CODE;
+  const expectedAccessCode = typeof process.env.TUTOR_ACCESS_CODE === "string" ? process.env.TUTOR_ACCESS_CODE.trim() : "";
   if (!expectedAccessCode) {
     return res.status(503).json({ error: "The AI tutor is not configured securely yet. Add TUTOR_ACCESS_CODE to the hosting provider environment variables." });
   }
