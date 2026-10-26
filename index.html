@@ -226,11 +226,25 @@ function deleteMaterial(id){if(!confirm("Delete this revision material?"))return
 function saveNote(id,i){state.notes[id+"-"+i]=document.getElementById("personalNote").value;save();toast("Notes saved")}
 function buildQuiz(id){let s=subjects[id],qs=[];s.topics.forEach((t,ti)=>t.cards.forEach((c,ci)=>qs.push({q:c[0],answer:c[1],topic:ti,options:[]})));let extras={
 ess:[["Which statement best describes an open system?","It exchanges both matter and energy with its surroundings.",["It exchanges energy but not matter.","It exchanges neither matter nor energy.","It exchanges both matter and energy with its surroundings.","It exchanges matter but never energy."]],["Which process removes atmospheric CO₂ through biomass production?","Photosynthesis.",["Combustion.","Photosynthesis.","Respiration.","Decomposition."]]],
-maths:[["A right triangle has opposite side 6 and hypotenuse 10. What is sin θ?","0.6",["0.4","0.6","1.67","4"]],["A circle has radius 3 cm and central angle 60°. What is its arc length?","π cm",["π cm","3π cm","6π cm","π/3 cm"]]],
+maths:[
+["A right triangle has opposite side 6 and hypotenuse 10. What is sin θ?","0.6",["0.4","0.6","1.67","4"]],
+["A circle has radius 3 cm and central angle 60°. What is its arc length?","π cm",["π cm","3π cm","6π cm","π/3 cm"]],
+["A triangle has sides 7 cm and 9 cm with included angle 60°. Find the third side to 2 d.p.","8.19 cm",["8.19 cm","10.44 cm","5.66 cm","16.00 cm"],"Non-right-angled trigonometry"],
+["Find the 8th term of 3, 6, 12, 24, …","384",["192","384","768","1536"],"Geometric sequences and series"],
+["A fair die is rolled. Find P(number greater than 4).","1/3",["1/6","1/3","1/2","2/3"],"Probability"],
+["A line passes through (2, 5) with gradient 3. Find its equation.","y = 3x − 1",["y = 3x + 1","y = 3x − 1","y = 2x + 3","y = 5x − 3"],"Linear models"],
+["A dataset contains 80 values. At what cumulative frequency is the median estimated?","40",["20","40","60","80"],"Cumulative frequency"],
+["A regression model is ŷ = 2.5x + 4. Estimate y when x = 6.","19",["15","19","21","25"],"Linear regression"],
+["y is directly proportional to x. When x = 4, y = 12. Find y when x = 7.","21",["18","21","24","28"],"Proportion"],
+["A cylinder has radius 3 cm and height 10 cm. Find its volume.","90π cm³",["30π cm³","60π cm³","90π cm³","180π cm³"],"Volume of 3D shapes"],
+["£800 grows by 5% compound interest annually for 2 years. Find the final amount.","£882",["£840","£880","£882","£884"],"Financial mathematics"],
+["A circle has radius 6 cm and sector angle 90°. Find the sector area.","9π cm²",["6π cm²","9π cm²","18π cm²","36π cm²"],"Areas of sectors and segments"],
+["What does a Spearman rank coefficient of −0.9 indicate?","A strong negative rank correlation",["A weak positive rank correlation","A strong negative rank correlation","No rank correlation","Proof of causation"],"Correlation and Spearman’s rank"]
+],
 english:[["What makes analysis of a writer's choice effective?","Explaining how the choice shapes meaning for the audience and purpose.",["Only naming the technique.","Retelling the text's content.","Explaining how the choice shapes meaning for the audience and purpose.","Listing as many techniques as possible."]],["What should a Paper 2 comparative essay do?","Develop an argument comparing choices in both studied works.",["Summarise each work separately.","Develop an argument comparing choices in both studied works.","Focus only on plot events.","Avoid discussing authorial choices."]]],
 spanish:[["Choose the correct present-tense form: 'Nosotros ___ en Londres' (vivir).","vivimos",["viven","vivo","vivimos","vive"]],["What does 'sin embargo' mean?","However / nevertheless.",["Because.","Afterwards.","However / nevertheless.","Although not."]]],
 history:[["What does OPVL stand for in source analysis?","Origin, Purpose, Value, Limitation.",["Origin, Perspective, Validity, Logic.","Origin, Purpose, Value, Limitation.","Objective, Purpose, Viewpoint, Legacy.","Origin, Proof, Validity, Limitations."]],["What should a strong History essay paragraph include?","A claim, specific evidence and explanation linked to the question.",["A list of dates without explanation.","A claim, specific evidence and explanation linked to the question.","A quotation only.","A conclusion with no evidence."]]]}
-;(extras[id]||[]).forEach(e=>qs.push({q:e[0],answer:e[1],options:e[2],topic:0}));return qs}
+;(extras[id]||[]).forEach(e=>qs.push({q:e[0],answer:e[1],options:e[2],topic:typeof e[3]==="string"&&id==="maths"?Math.max(0,s.topics.findIndex(t=>t.title===e[3])):0}));return qs}
 function startSubjectQuiz(id){practiceSubject=id;currentQuiz=buildQuiz(id);questionIndex=0;selectedAnswer=null;answerSubmitted=false;page="practice";render()}
 const conjugationTenses=[["present","Present tense"],["presentProgressive","Present continuous (estar + gerundio)"],["preterite","Preterite"],["imperfect","Imperfect"],["pluperfect","Past perfect"],["future","Future"],["conditional","Conditional"],["presentSubjunctive","Subjunctive (extra practice; not covered in class)"]];
 const conjPeople=[["yo","yo"],["tu","tú"],["el","él / ella / usted"],["nosotros","nosotros/as"],["vosotros","vosotros/as"],["ellos","ellos / ellas / ustedes"]];
